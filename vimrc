@@ -1,4 +1,4 @@
-" General Settings
+" general Settings
 set nocompatible              " Turn off compatibility with Vi
 syntax on                     " Enable syntax highlighting
 filetype plugin indent on     " Enable filetype detection and plugin-based indenting
@@ -45,7 +45,9 @@ Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 Plug 'dense-analysis/ale'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'vim-airline/vim-airline'
+Plug 'airblade/vim-gitgutter'
 call plug#end()"Plugins
 
 
@@ -55,3 +57,50 @@ nnoremap <Leader>h :wincmd h<CR>
 nnoremap <Leader>j :wincmd j<CR>
 nnoremap <Leader>k :wincmd k<CR>
 nnoremap <Leader>l :wincmd l<CR>
+
+" coc.nvim global extensions
+let g:coc_global_extensions = ['coc-json', 'coc-snippets', 'coc-pyright', 'coc-java', 'coc-clangd']
+
+" Custom Key Bindings
+let mapleader = " "           " Set space as the leader key
+nnoremap <Leader>h :wincmd h<CR>
+nnoremap <Leader>j :wincmd j<CR>
+nnoremap <Leader>k :wincmd k<CR>
+nnoremap <Leader>l :wincmd l<CR>
+
+" Coc.nvim configurations
+" Use `[g` and `]g` to navigate diagnostics
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" Use `gd` to go to definition
+nmap <silent> gd <Plug>(coc-definition)
+
+" Use `gy` to go to type definition
+nmap <silent> gy <Plug>(coc-type-definition)
+
+" Use `gi` to go to implementation
+nmap <silent> gi <Plug>(coc-implementation)
+
+" Use `gr` to go to references
+nmap <silent> gr <Plug>(coc-references)
+
+" Use `:CocCommand` for running commands
+" Use `<leader>ac` for code actions
+nmap <leader>ac <Plug>(coc-codeaction)
+
+" Use `<leader>s` for searching and applying code snippets
+xmap <leader>s  <Plug>(coc-snippets-select)
+nmap <leader>s  <Plug>(coc-snippets-select)
+
+" Autocompletion customization
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
